@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+    nginx2:
+        # image: nginx
+        image: nginxdemos/hello
+        restart: always
+        # volumes:
+        #     - ./index.html:/usr/share/nginx/html/index.html
+        ports:
+            - "8082:80"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.nginx2.rule=Host(`10.10.1.101`) && Path(`/nginx2`)"
+            - "traefik.http.routers.nginx2.entrypoints=web"
+        networks:
+            - network-test
+
+networks:
+   network-test:
+     external: true
